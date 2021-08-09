@@ -1,0 +1,19 @@
+{
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index",
+  "scripts": {
+    "start": "node --experimental-specifier-resolution=node dist/index.js",
+    "build": "tsc -d",
+    "watch": "tsc-watch --onSuccess \"npm start\"",
+    "lint": "eslint . --ext .ts"
+  },
+  "devDependencies": {
+    "@tsconfig/node14": "^1.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.29.0",
+    "eslint": "^7.29.0",
+    "tsc-watch": "^4.4.0",
+    "typescript": "^4.0.3"
+  }
+}

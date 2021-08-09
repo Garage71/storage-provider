@@ -1,2 +1,3 @@
 # storage-provider
-Arbitrary container of partuclar objects with limited access
+
+Arbitrary container of particular objects with limited access
