@@ -50,9 +50,11 @@ export class ArbitraryStorage<T = string> {
           return;
         } else {
           if (waitQueue && weight > 1) {
-            while (waitQueue?.length > 0) {
+            while (waitQueue?.length > 0 && weight > 1) {
               weight--;
+              this.weightMap.set(ip, weight);
               enqueued = waitQueue?.shift();
+              this.waitQueueLength--;
               enqueued?.promise.resole()(ip);
             }
           } else {
@@ -74,6 +76,7 @@ export class ArbitraryStorage<T = string> {
         }
       }
     } else {
+      this.weightMap.set(ip, 0);
       this.processQueue(ip);
     }
   };
