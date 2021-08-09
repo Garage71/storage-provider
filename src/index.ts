@@ -9,8 +9,9 @@ const storage = new ArbitraryStorage(ips);
   setInterval(async () => {
     try {
       let priority: Priority = Priority.Default;
-      const rnd = Math.floor(Math.random() * 4);
-      switch (rnd) {
+      const rndPriority = Math.floor(Math.random() * 4);
+      const rndWeight = Math.floor(Math.random() * 4);
+      switch (rndPriority) {
         case 0:
           priority = Priority.Critical;
           break;
@@ -23,10 +24,10 @@ const storage = new ArbitraryStorage(ips);
         case 3:
           priority = Priority.Default;
       }
-      const result = await storage.getIp(rnd, priority);
+      const result = await storage.getIp(rndWeight, priority);
       console.log(result);
     } catch (ex) {
       console.log(ex);
     }
-  }, 80);
+  }, 50);
 })();

@@ -33,6 +33,7 @@ export class ArbitraryStorage<T = string> {
   }
 
   private processQueue = (ip: T) => {
+    let weight = 1;
     for (const priority in Priority) {
       const value = Number(priority);
       if (!isNaN(value)) {
@@ -40,11 +41,24 @@ export class ArbitraryStorage<T = string> {
         if (waitQueue?.length === 0) {
           continue;
         }
-        const enqueued = waitQueue?.shift();
+        let enqueued = waitQueue?.shift();
         this.waitQueueLength--;
-        this.reserveIp(ip, enqueued?.weight as number);
+        weight = enqueued?.weight as number;
+        this.reserveIp(ip, weight);
         enqueued?.promise.resole()(ip);
-        return;
+        if (weight === 1) {
+          return;
+        } else {
+          if (waitQueue && weight > 1) {
+            while (waitQueue?.length > 0) {
+              weight--;
+              enqueued = waitQueue?.shift();
+              enqueued?.promise.resole()(ip);
+            }
+          } else {
+            continue;
+          }
+        }
       }
     }
   };
